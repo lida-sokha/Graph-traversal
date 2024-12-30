@@ -1,85 +1,114 @@
 #include <iostream>
 #include <vector>
-#include <map>
 #include <queue>
 #include <set>
 using namespace std;
 
 class Graph {
-public:
-    map<char, vector<char>> adjList; 
+private:
+    int vertices; // Number of vertices
+    vector<vector<int>> adjList; // Adjacency list representation
 
-    void addEdge(char from, char to) {
-        adjList[from].push_back(to); 
-        adjList[to];                 
+public:
+    // Constructor
+    Graph(int v) : vertices(v) {
+        adjList.resize(v);
     }
 
-    void dfs(char node, set<char>& visited, vector<char>& result) {
-        if (visited.count(node) == 0) { 
-            visited.insert(node);       
-            result.push_back(node);     
+    // Add an edge to the graph
+    void addEdge(int u, int v) {
+        adjList[u].push_back(v);
+        adjList[v].push_back(u); // For undirected graph
+    }
 
-            for (char neighbor : adjList[node]) {
-                dfs(neighbor, visited, result);
+    // DFS Implementation
+    void DFS(int startVertex) {
+        vector<bool> visited(vertices, false);
+        vector<int> traversal;
+        dfsHelper(startVertex, visited, traversal);
+
+        // Print the traversal order
+        cout << "DFS Traversal: ";
+        for (int vertex : traversal) {
+            cout << vertex << " ";
+        }
+        cout << endl;
+    }
+
+    // Helper function for DFS (Recursive)
+    void dfsHelper(int vertex, vector<bool>& visited, vector<int>& traversal) {
+        visited[vertex] = true;
+        traversal.push_back(vertex);
+
+        for (int neighbor : adjList[vertex]) {
+            if (!visited[neighbor]) {
+                dfsHelper(neighbor, visited, traversal);
             }
         }
     }
 
-    vector<char> bfs(char startNode) {
-        vector<char> result;   
-        queue<char> q;        
-        set<char> visited;    
-        q.push(startNode);     
-        visited.insert(startNode);
+    // BFS Implementation
+    void BFS(int startVertex) {
+        vector<bool> visited(vertices, false);
+        queue<int> q;
+        vector<int> traversal;
+
+        q.push(startVertex);
+        visited[startVertex] = true;
 
         while (!q.empty()) {
-            char current = q.front(); 
+            int vertex = q.front();
             q.pop();
-            result.push_back(current); 
+            traversal.push_back(vertex);
 
-            for (char neighbor : adjList[current]) {
-                if (visited.count(neighbor) == 0) {
-                    visited.insert(neighbor);
-                    q.push(neighbor);         
+            for (int neighbor : adjList[vertex]) {
+                if (!visited[neighbor]) {
+                    q.push(neighbor);
+                    visited[neighbor] = true;
                 }
             }
         }
 
-        return result;
+        // Print the traversal order
+        cout << "BFS Traversal: ";
+        for (int vertex : traversal) {
+            cout << vertex << " ";
+        }
+        cout << endl;
+    }
+
+    // Display the graph's structure
+    void Display() {
+        cout << "Graph (Adjacency List):" << endl;
+        for (int i = 0; i < vertices; ++i) {
+            cout << i << ": ";
+            for (int neighbor : adjList[i]) {
+                cout << neighbor << " ";
+            }
+            cout << endl;
+        }
     }
 };
 
 int main() {
-    Graph graph;
+    // Create the graph
+    Graph graph(5);
 
-    // Create the graph by adding edges
-    graph.addEdge('A', 'B');
-    graph.addEdge('A', 'C');
-    graph.addEdge('B', 'D');
-    graph.addEdge('B', 'E');
-    graph.addEdge('C', 'F');
-    graph.addEdge('E', 'F');
+    // Add edges
+    graph.addEdge(0, 1);
+    graph.addEdge(0, 4);
+    graph.addEdge(1, 2);
+    graph.addEdge(1, 3);
+    graph.addEdge(3, 4);
 
-    // Perform DFS traversal
-    set<char> visited;            
-    vector<char> dfsResult;        
-    graph.dfs('A', visited, dfsResult);
+    // Display the graph structure
+    graph.Display();
 
-    // Perform BFS traversal
-    vector<char> bfsResult = graph.bfs('A');
+    // Perform DFS starting from vertex 0
+    graph.DFS(0);
 
-    // Display the traversal results
-    cout << "DFS Traversal: ";
-    for (char node : dfsResult) {
-        cout << node << " ";
-    }
-    cout << endl;
-
-    cout << "BFS Traversal: ";
-    for (char node : bfsResult) {
-        cout << node << " ";
-    }
-    cout << endl;
+    // Perform BFS starting from vertex 0
+    graph.BFS(0);
 
     return 0;
 }
