@@ -1,38 +1,55 @@
 Graph Traversal: DFS and BFS
 
-1.Overview
+1. Objective
 
-This project demonstrates the implementation of Depth-First Search (DFS) and Breadth-First Search (BFS) algorithms for traversing a graph.
+This project implements Depth-First Search (DFS) and Breadth-First Search (BFS) traversal algorithms for an undirected graph. Additionally, it includes a method to display the graph's structure using an adjacency list representation.
 
-2.Algorithms
+Input Graph
+
+The graph is defined as follows:
+
+Vertices: {0, 1, 2, 3, 4}
+
+Edges: {(0,1), (0,4), (1,2), (1,3), (3,4)}
+
+2. Algorithms
 
   1. Depth-First Search (DFS)
 
   Description:
   DFS explores as far as possible along each branch before backtracking. It is implemented recursively in this project.
   
-  Key Steps:
-  
-  Start at the root node (A).
-  Visit a neighbor and keep exploring deeper until all neighbors are visited.
-  Backtrack when no unvisited neighbors remain.
-  
-  Result (Traversal Order):
-  A -> B -> D -> E -> F -> C
+  Approach:
+
+  Implemented recursively with a helper function to track visited nodes.
+
+  Traversal Order: Starting from vertex 0, 
+
+  the traversal is:
+
+  0 -> 1 -> 2 -> 3 -> 4
 
   2. Breadth-First Search (BFS)
      
   Description:
   BFS explores all neighbors at the current depth before moving on to the next depth level. It uses a queue to manage traversal order.
   
-  Key Steps:
-  
-  Start at the root node (A).
-  Visit all neighbors of the current node.
-  Continue to the next level of neighbors.
-  
-  Result (Traversal Order):
-  A -> B -> C -> D -> E -> F
+ Approach:
+
+  Uses a queue to manage the traversal order and a visited list to avoid revisiting nodes.
+
+  Traversal Order: Starting from vertex 0, 
+
+  the traversal is:
+
+  0 -> 1 -> 4 -> 2 -> 3
+3. Display 
+
+Method: Display()
+
+Description:
+
+Prints the graph's structure in adjacency list format, showing which vertices are connected to each other.
 
 3.Observations
 
