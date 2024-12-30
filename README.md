@@ -29,5 +29,7 @@ This project demonstrates the implementation of Depth-First Search (DFS) and Bre
   A -> B -> C -> D -> E -> F
 
 3.Observations
+
 DFS: It is useful for exploring all paths in a graph, detecting cycles, or solving problems like pathfinding.
+
 BFS: It is ideal for finding the shortest path in an unweighted graph or performing level-order traversal.
